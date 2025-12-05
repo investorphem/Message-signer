@@ -1,9 +1,11 @@
-// wagmiClient.js
+// src/wagmiClient.js - Corrected Code
 import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { InjectedConnector, MetaMaskConnector } from 'wagmi/connectors';
+// Import connectors from their specific paths, not a generic 'wagmi/connectors'
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-// Manually define Base chains with RPC URLs
+// Manually define Base chains with the PRECISE RPC URL structure wagmi v1 needs
 const base = {
   id: 8453,
   name: 'Base',
