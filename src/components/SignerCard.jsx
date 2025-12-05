@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
-// Changed useSigner to useWalletClient
 import { useWalletClient, useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+// Import standard chain objects here as well
+import { base, baseSepolia, baseGoerli } from 'wagmi/chains'; 
 import { ethers } from 'ethers'
 
+// Map standard chains to a simple format for the dropdown menu
 const NETWORKS = [
-  { id: 8453, label: 'Base Mainnet', rpc: 'https://mainnet.base.org' },
-  { id: 84532, label: 'Base Sepolia (testnet)', rpc: 'https://sepolia.base.org' },
-  { id: 84531, label: 'Base Goerli (testnet)', rpc: 'https://goerli.base.org' }
-]
+  { id: base.id, label: base.name, rpc: base.rpcUrls.default.http[0] },
+  { id: baseSepolia.id, label: baseSepolia.name, rpc: baseSepolia.rpcUrls.default.http[0] },
+  { id: baseGoerli.id, label: baseGoerli.name, rpc: baseGoerli.rpcUrls.default.http[0] }
+];
 
 export default function SignerCard() {
-  // Changed signer hook usage to walletClient
   const { data: walletClient } = useWalletClient()
   const { address } = useAccount()
   const { chain } = useNetwork()
@@ -19,7 +20,8 @@ export default function SignerCard() {
   const [signature, setSignature] = useState('')
   const [recovered, setRecovered] = useState('')
   const [typedSig, setTypedSig] = useState('')
-  const [selected, setSelected] = useState(NETWORKS[0].id)
+  // Initialize 'selected' state using a value that exists in our NETWORKS array
+  const [selected, setSelected] = useState(NETWORKS[0].id) 
 
   useEffect(() => {
     // Attempt to switch wallet network when selected changes
@@ -29,10 +31,8 @@ export default function SignerCard() {
   }, [selected, switchNetwork])
 
   async function signMessage() {
-    // Check for walletClient instead of signer
     if (!walletClient) return alert('Connect wallet first')
     try {
-      // Use the walletClient.signMessage function
       const sig = await walletClient.signMessage({ message })
       setSignature(sig)
     } catch (e) { alert('Sign failed: ' + e.message) }
@@ -73,10 +73,8 @@ export default function SignerCard() {
   })
 
   async function signTyped() {
-    // Check for walletClient instead of signer
     if (!walletClient) return alert('Connect wallet first')
     try {
-      // Use the walletClient.signTypedData function (wagmi v1 syntax)
       const sig = await walletClient.signTypedData({
         domain: domain(selected),
         types,
