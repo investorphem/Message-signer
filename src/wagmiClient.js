@@ -1,8 +1,14 @@
-import { createClient, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-import { connectorsForWallets } from '@wagmi/core'
-import { injectedWallet, metaMaskWallet } from '@wagmi/core/wallets'
+import { createConfig, configureChains } from 'wagmi'; // Changed createClient to createConfig
+import { publicProvider } from 'wagmi/providers/public';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+// Remove the incorrect imports:
+// import { connectorsForWallets } from '@wagmi/core'
+// import { injectedWallet, metaMaskWallet } from '@wagmi/core/wallets'
+
+// Import correct connector classes directly from wagmi:
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'; // You might need this if you expand connectivity
 
 const chainsInput = [
   { id: 8453, name: 'Base', network: 'base', rpc: 'https://mainnet.base.org' },         // mainnet
@@ -25,18 +31,22 @@ chains.forEach(c => {
   rpcMap[c.id] = () => ({ http: chainsInput.find(x => x.id === c.id).rpc })
 })
 
-const { provider, webSocketProvider } = configureChains(
+const { publicClient, webSocketPublicClient } = configureChains( // Changed provider/webSocketProvider names
   chains,
   [jsonRpcProvider(({ chain }) => ({ http: rpcMap[chain.id]() })), publicProvider()]
 )
 
-const connectors = connectorsForWallets([
-  { groupName: 'Recommended', wallets: [injectedWallet({ chains }), metaMaskWallet({ chains })] }
-])
+// Configure connectors using the new class structure:
+const connectors = [
+    new InjectedConnector({ chains }),
+    new MetaMaskConnector({ chains }),
+    // You can add more connectors here, e.g., new WalletConnectConnector(...)
+];
 
-export const wagmiClient = createClient({
+
+export const wagmiClient = createConfig({ // Changed createClient to createConfig
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
+  publicClient, // Use publicClient instead of provider
+  webSocketPublicClient, // Use webSocketPublicClient instead of webSocketProvider
 })
