@@ -1,52 +1,49 @@
-import { createConfig, configureChains } from 'wagmi'; // Changed createClient to createConfig
+import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-// Remove the incorrect imports:
-// import { connectorsForWallets } from '@wagmi/core'
-// import { injectedWallet, metaMaskWallet } from '@wagmi/core/wallets'
-
-// Import correct connector classes directly from wagmi:
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'; // You might need this if you expand connectivity
 
+// Define the chains with RPC URLs included in the object structure
 const chainsInput = [
-  { id: 8453, name: 'Base', network: 'base', rpc: 'https://mainnet.base.org' },         // mainnet
-  { id: 84532, name: 'Base Sepolia', network: 'base-sepolia', rpc: 'https://sepolia.base.org' }, // sepolia testnet
-  { id: 84531, name: 'Base Goerli', network: 'base-goerli', rpc: 'https://goerli.base.org' } // goerli testnet (if available)
-]
+  { id: 8453, name: 'Base', network: 'base', rpcUrl: 'https://mainnet.base.org' },
+  { id: 84532, name: 'Base Sepolia', network: 'base-sepolia', rpcUrl: 'https://sepolia.base.org' },
+  { id: 84531, name: 'Base Goerli', network: 'base-goerli', rpcUrl: 'https://goerli.base.org' }
+];
 
-// convert to wagmi chain objects
+// Convert to standard wagmi chain objects
 const chains = chainsInput.map(c => ({
   id: c.id,
   name: c.name,
   network: c.network,
-  rpcUrls: { default: c.rpc },
+  rpcUrls: { default: { http: [c.rpcUrl] } }, // Wagmi v1 standard format
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  blockExplorers: { default: { name: 'Base Explorer', url: c.rpc.replace('https://','https://') } }
-}))
+  blockExplorers: { default: { name: 'Base Explorer', url: c.rpcUrl.replace('https://','https://') } }
+}));
 
-const rpcMap = {}
-chains.forEach(c => {
-  rpcMap[c.id] = () => ({ http: chainsInput.find(x => x.id === c.id).rpc })
-})
-
-const { publicClient, webSocketPublicClient } = configureChains( // Changed provider/webSocketProvider names
+// Configure chains with providers. We define how to get the correct URL using jsonRpcProvider's api key config:
+const { publicClient, webSocketPublicClient } = configureChains(
   chains,
-  [jsonRpcProvider(({ chain }) => ({ http: rpcMap[chain.id]() })), publicProvider()]
-)
+  [
+    jsonRpcProvider({
+      apiOrRpcUrl: (chain) => {
+        // Return the specific http endpoint for the current chain being configured
+        return chain.rpcUrls.default.http[0];
+      },
+    }),
+    publicProvider()
+  ]
+);
 
-// Configure connectors using the new class structure:
+// Configure connectors using the new class structure
 const connectors = [
     new InjectedConnector({ chains }),
     new MetaMaskConnector({ chains }),
-    // You can add more connectors here, e.g., new WalletConnectConnector(...)
 ];
 
-
-export const wagmiClient = createConfig({ // Changed createClient to createConfig
+export const wagmiClient = createConfig({
   autoConnect: true,
   connectors,
-  publicClient, // Use publicClient instead of provider
-  webSocketPublicClient, // Use webSocketPublicClient instead of webSocketProvider
-})
+  publicClient,
+  webSocketPublicClient,
+});
