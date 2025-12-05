@@ -1,39 +1,18 @@
 import { createConfig, configureChains } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { publicProvider } = from 'wagmi/providers/public';
+// Use standard chain definitions instead of custom array
+import { base, baseSepolia, baseGoerli } from 'wagmi/chains'; 
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-// Define the chains with RPC URLs included in the object structure
-const chainsInput = [
-  { id: 8453, name: 'Base', network: 'base', rpcUrl: 'https://mainnet.base.org' },
-  { id: 84532, name: 'Base Sepolia', network: 'base-sepolia', rpcUrl: 'https://sepolia.base.org' },
-  { id: 84531, name: 'Base Goerli', network: 'base-goerli', rpcUrl: 'https://goerli.base.org' }
-];
+// Use the standard, pre-configured chain objects
+const chains = [base, baseSepolia, baseGoerli];
 
-// Convert to standard wagmi chain objects
-const chains = chainsInput.map(c => ({
-  id: c.id,
-  name: c.name,
-  network: c.network,
-  // This structure is essential for wagmi v1:
-  rpcUrls: { default: { http: [c.rpcUrl] } }, 
-  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  blockExplorers: { default: { name: 'Base Explorer', url: c.rpcUrl.replace('https://','https://') } }
-}));
-
-// Configure chains with providers
+// Configure chains with standard providers
+// Wagmi handles the RPC URLs internally when using standard chain objects
 const { publicClient, webSocketPublicClient } = configureChains(
   chains,
-  [
-    jsonRpcProvider({
-      // Provide the function that returns the HTTP URL
-      rpc: (chain) => ({
-        http: chain.rpcUrls.default.http[0],
-      }),
-    }),
-    publicProvider()
-  ]
+  [publicProvider()] // Only publicProvider is needed if you don't need custom JSON RPC setup
 );
 
 // Configure connectors
