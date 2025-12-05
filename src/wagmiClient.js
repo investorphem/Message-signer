@@ -1,5 +1,6 @@
 import { createConfig, configureChains } from 'wagmi';
-import { publicProvider } = from 'wagmi/providers/public';
+// Corrected line: removed the extra '='
+import { publicProvider } from 'wagmi/providers/public'; 
 // Use standard chain definitions instead of custom array
 import { base, baseSepolia, baseGoerli } from 'wagmi/chains'; 
 import { InjectedConnector } from 'wagmi/connectors/injected';
