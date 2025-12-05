@@ -16,26 +16,27 @@ const chains = chainsInput.map(c => ({
   id: c.id,
   name: c.name,
   network: c.network,
-  rpcUrls: { default: { http: [c.rpcUrl] } }, // Wagmi v1 standard format
+  // This structure is essential for wagmi v1:
+  rpcUrls: { default: { http: [c.rpcUrl] } }, 
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   blockExplorers: { default: { name: 'Base Explorer', url: c.rpcUrl.replace('https://','https://') } }
 }));
 
-// Configure chains with providers. We define how to get the correct URL using jsonRpcProvider's api key config:
+// Configure chains with providers
 const { publicClient, webSocketPublicClient } = configureChains(
   chains,
   [
     jsonRpcProvider({
-      apiOrRpcUrl: (chain) => {
-        // Return the specific http endpoint for the current chain being configured
-        return chain.rpcUrls.default.http[0];
-      },
+      // Provide the function that returns the HTTP URL
+      rpc: (chain) => ({
+        http: chain.rpcUrls.default.http[0],
+      }),
     }),
     publicProvider()
   ]
 );
 
-// Configure connectors using the new class structure
+// Configure connectors
 const connectors = [
     new InjectedConnector({ chains }),
     new MetaMaskConnector({ chains }),
