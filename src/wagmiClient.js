@@ -9,10 +9,9 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 const chains = [base, baseSepolia, baseGoerli];
 
 // Configure chains with standard providers
-// Wagmi handles the RPC URLs internally when using standard chain objects
 const { publicClient, webSocketPublicClient } = configureChains(
   chains,
-  [publicProvider()] // Only publicProvider is needed now
+  [publicProvider()] // This works reliably with the standard chain objects
 );
 
 // Configure connectors
