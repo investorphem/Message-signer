@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useSigner, useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+// Changed useSigner to useWalletClient
+import { useWalletClient, useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { ethers } from 'ethers'
 
 const NETWORKS = [
@@ -9,7 +10,8 @@ const NETWORKS = [
 ]
 
 export default function SignerCard() {
-  const { data: signer } = useSigner()
+  // Changed signer hook usage to walletClient
+  const { data: walletClient } = useWalletClient()
   const { address } = useAccount()
   const { chain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
@@ -27,9 +29,11 @@ export default function SignerCard() {
   }, [selected, switchNetwork])
 
   async function signMessage() {
-    if (!signer) return alert('Connect wallet first')
+    // Check for walletClient instead of signer
+    if (!walletClient) return alert('Connect wallet first')
     try {
-      const sig = await signer.signMessage(message)
+      // Use the walletClient.signMessage function
+      const sig = await walletClient.signMessage({ message })
       setSignature(sig)
     } catch (e) { alert('Sign failed: ' + e.message) }
   }
@@ -69,9 +73,15 @@ export default function SignerCard() {
   })
 
   async function signTyped() {
-    if (!signer) return alert('Connect wallet first')
+    // Check for walletClient instead of signer
+    if (!walletClient) return alert('Connect wallet first')
     try {
-      const sig = await signer._signTypedData(domain(selected), types, value(address))
+      // Use the walletClient.signTypedData function (wagmi v1 syntax)
+      const sig = await walletClient.signTypedData({
+        domain: domain(selected),
+        types,
+        message: value(address)
+      })
       setTypedSig(sig)
     } catch (e) { alert('Typed sign failed: ' + e.message) }
   }
