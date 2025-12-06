@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-// Import account/network hooks from 'wagmi'
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'; 
-// Import contract-specific hooks from '@wagmi/core'
-import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from '@wagmi/core'; 
+// All necessary hooks are imported from 'wagmi' directly for v1.x:
+import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 import { MESSAGE_BOARD_CONTRACT_ADDRESS, MESSAGE_BOARD_ABI } from '../constants';
 
 const NETWORKS = [
-  { id: 8453, label: 'Base Mainnet', rpc: 'https://mainnet.base.org' }
+  // Targeting Base Mainnet explicitly in the UI dropdown
+  { id: 8453, label: 'Base Mainnet', rpc: 'https://mainnet.base.org' },
+  { id: 84532, label: 'Base Sepolia (testnet)', rpc: 'https://sepolia.base.org' }
 ];
 
 export default function SignerCard() {
@@ -14,7 +14,8 @@ export default function SignerCard() {
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const [message, setMessage] = useState('Hello Base, on-chain!');
-  const [selected, setSelected] = useState(NETWORKS.id);
+  // Default selected network is Mainnet ID (8453)
+  const [selected, setSelected] = useState(NETWORKS[0].id); // Initialize with first item ID
 
   const { data: hash, writeContractAsync } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
@@ -26,6 +27,7 @@ export default function SignerCard() {
   });
 
   useEffect(() => {
+    // Prompt user to switch networks if they aren't on the currently selected network
     if (switchNetwork && selected && chain?.id !== selected) {
         try { switchNetwork(selected); } catch (e) { /* ignore */ }
     }
@@ -38,7 +40,9 @@ export default function SignerCard() {
 
   async function sendOnChainMessage() {
     if (!isConnected || !address) return alert('Connect wallet first');
-    if (chain?.id !== selected) return alert(`Please switch to ${NETWORKS.label} first.`);
+    // Find the current network label for the alert message
+    const currentNetwork = NETWORKS.find(n => n.id === selected)?.label || 'selected network';
+    if (chain?.id !== selected) return alert(`Please switch to ${currentNetwork} first.`);
     if (!message.trim()) return alert('Message cannot be empty');
 
     try {
