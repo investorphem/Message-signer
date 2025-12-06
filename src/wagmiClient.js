@@ -5,7 +5,7 @@ import { base, baseSepolia } from 'wagmi/chains';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-// Only use the standard, pre-configured active chain objects
+// Use the standard, pre-configured active chain objects
 const chains = [base, baseSepolia];
 
 // Configure chains with standard providers
