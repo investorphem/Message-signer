@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// All necessary hooks are imported from 'wagmi' directly
+// All necessary hooks are imported from 'wagmi' directly for v1.x:
 import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 import { MESSAGE_BOARD_CONTRACT_ADDRESS, MESSAGE_BOARD_ABI } from '../constants';
 
