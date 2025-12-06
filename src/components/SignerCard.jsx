@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'; // Basic hooks from wagmi
+import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from '@wagmi/core'; // Contract hooks from @wagmi/core
 import { MESSAGE_BOARD_CONTRACT_ADDRESS, MESSAGE_BOARD_ABI } from '../constants';
 
 const NETWORKS = [
@@ -12,8 +13,7 @@ export default function SignerCard() {
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const [message, setMessage] = useState('Hello Base, on-chain!');
-  // Default selected network is Mainnet ID (8453)
-  const [selected, setSelected] = useState(NETWORKS[0].id);
+  const [selected, setSelected] = useState(NETWORKS.id);
 
   const { data: hash, writeContractAsync } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
@@ -25,7 +25,6 @@ export default function SignerCard() {
   });
 
   useEffect(() => {
-    // Prompt user to switch networks if they aren't on Base Mainnet
     if (switchNetwork && selected && chain?.id !== selected) {
         try { switchNetwork(selected); } catch (e) { /* ignore */ }
     }
@@ -38,7 +37,7 @@ export default function SignerCard() {
 
   async function sendOnChainMessage() {
     if (!isConnected || !address) return alert('Connect wallet first');
-    if (chain?.id !== selected) return alert(`Please switch to ${NETWORKS[0].label} first.`);
+    if (chain?.id !== selected) return alert(`Please switch to ${NETWORKS.label} first.`);
     if (!message.trim()) return alert('Message cannot be empty');
 
     try {
@@ -73,7 +72,6 @@ export default function SignerCard() {
         </button>
       </div>
 
-      {/* Block explorer link for mainnet basescan.org */}
       {hash && <p style={{ marginTop: 8 }}>Transaction Hash: <a href={`basescan.org{hash}`} target="_blank" rel="noopener noreferrer">{hash}</a></p>}
       
       <hr style={{ margin: '16px 0' }} />
