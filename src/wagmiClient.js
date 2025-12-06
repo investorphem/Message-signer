@@ -1,7 +1,6 @@
-// src/wagmiClient.js - Corrected Code
+// src/wagmiClient.js - Verified working configuration
 import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-// Import connectors from their specific paths, not a generic 'wagmi/connectors'
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
@@ -12,7 +11,7 @@ const base = {
   network: 'base',
   rpcUrls: {
     default: {
-      http: ['https://mainnet.base.org'],
+      http: ['https://mainnet.base.org'], // Must be an array of strings
     },
   },
   blockExplorers: {
