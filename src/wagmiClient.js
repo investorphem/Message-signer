@@ -1,5 +1,5 @@
 // src/wagmiClient.js
-import { createConfig, configureChains } = from 'wagmi';
+import { createConfig, configureChains } from 'wagmi'; // Corrected line
 import { publicProvider } from 'wagmi/providers/public';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
