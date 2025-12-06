@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'; // Basic hooks from wagmi
-import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from '@wagmi/core'; // Contract hooks from @wagmi/core
+// All necessary hooks are imported from 'wagmi' directly
+import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 import { MESSAGE_BOARD_CONTRACT_ADDRESS, MESSAGE_BOARD_ABI } from '../constants';
 
 const NETWORKS = [
-  // Targeting Base Mainnet explicitly
   { id: 8453, label: 'Base Mainnet', rpc: 'https://mainnet.base.org' }
 ];
 
