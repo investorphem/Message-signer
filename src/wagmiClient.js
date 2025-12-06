@@ -1,16 +1,20 @@
 import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { base, baseSepolia, baseGoerli } from 'wagmi/chains'; 
+// Only import active chains:
+import { base, baseSepolia } from 'wagmi/chains'; 
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-const chains = [base, baseSepolia, baseGoerli];
+// Only use the standard, pre-configured active chain objects
+const chains = [base, baseSepolia];
 
+// Configure chains with standard providers
 const { publicClient, webSocketPublicClient } = configureChains(
   chains,
   [publicProvider()]
 );
 
+// Configure connectors
 const connectors = [
     new InjectedConnector({ chains }),
     new MetaMaskConnector({ chains }),
