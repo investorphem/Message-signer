@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 // All necessary hooks are imported from 'wagmi' directly for v1.x:
 import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
-import { MESSAGE_BOARD_CONTRACT_ADDRESS, MESSAGE_BOARD_ABI } from '../constants';
+// Import both the ABI and the dictionary of addresses
+import { CONTRACT_ADDRESSES, MESSAGE_BOARD_ABI } from '../constants';
 
 const NETWORKS = [
-  // Targeting Base Mainnet explicitly in the UI dropdown
   { id: 8453, label: 'Base Mainnet', rpc: 'https://mainnet.base.org' },
   { id: 84532, label: 'Base Sepolia (testnet)', rpc: 'https://sepolia.base.org' }
 ];
@@ -14,16 +14,21 @@ export default function SignerCard() {
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const [message, setMessage] = useState('Hello Base, on-chain!');
-  // Default selected network is Mainnet ID (8453)
-  const [selected, setSelected] = useState(NETWORKS[0].id); // Initialize with first item ID
+  const [selected, setSelected] = useState(NETWORKS[0].id); // Default to Mainnet ID
+
+  // Dynamically determine the contract address based on the selected network in the UI
+  const contractAddress = CONTRACT_ADDRESSES[selected];
 
   const { data: hash, writeContractAsync } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
+  
+  // Use the dynamic address for reading messages
   const { data: allMessages, refetch: refetchMessages } = useReadContract({
-    address: MESSAGE_BOARD_CONTRACT_ADDRESS,
+    address: contractAddress, // Use the dynamic address
     abi: MESSAGE_BOARD_ABI,
     functionName: 'getAllMessages',
-    watch: true, 
+    watch: true, // Automatically refetch when an event occurs
+    chainId: selected // Ensure we read from the selected chain ID
   });
 
   useEffect(() => {
@@ -35,27 +40,36 @@ export default function SignerCard() {
         refetchMessages();
         alert('Message successfully sent and confirmed on-chain!');
     }
+    // Also refetch when the user manually changes the network dropdown selection
+    refetchMessages(); 
   }, [selected, switchNetwork, chain, isConfirmed, refetchMessages]);
 
 
   async function sendOnChainMessage() {
     if (!isConnected || !address) return alert('Connect wallet first');
-    // Find the current network label for the alert message
     const currentNetwork = NETWORKS.find(n => n.id === selected)?.label || 'selected network';
     if (chain?.id !== selected) return alert(`Please switch to ${currentNetwork} first.`);
     if (!message.trim()) return alert('Message cannot be empty');
 
     try {
+      // Use the dynamic address for writing a message
       await writeContractAsync({
-        address: MESSAGE_BOARD_CONTRACT_ADDRESS,
+        address: contractAddress, 
         abi: MESSAGE_BOARD_ABI,
         functionName: 'sendMessage',
         args: [message],
+        chainId: selected
       });
     } catch (e) { 
         alert('Transaction failed or was rejected: ' + e.message);
     }
   }
+
+  const getExplorerUrl = (txHash, chainId) => {
+    if (chainId === 8453) return `basescan.org{txHash}`;
+    if (chainId === 84532) return `sepolia.basescan.org{txHash}`;
+    return '#';
+  };
 
   return (
     <div style={{ marginTop: 20, padding: 16, border: '1px solid #ddd', borderRadius: 8 }}>
@@ -77,11 +91,11 @@ export default function SignerCard() {
         </button>
       </div>
 
-      {hash && <p style={{ marginTop: 8 }}>Transaction Hash: <a href={`basescan.org{hash}`} target="_blank" rel="noopener noreferrer">{hash}</a></p>}
+      {hash && <p style={{ marginTop: 8 }}>Transaction Hash: <a href={getExplorerUrl(hash, selected)} target="_blank" rel="noopener noreferrer">{hash}</a></p>}
       
       <hr style={{ margin: '16px 0' }} />
 
-      <h4>Recent Messages On-Chain</h4>
+      <h4>Recent Messages On-Chain ({NETWORKS.find(n => n.id === selected)?.label})</h4>
       <div style={{ maxHeight: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px' }}>
         {allMessages && allMessages.length > 0 ? (
           [...allMessages].reverse().map((msg, index) => (
@@ -92,7 +106,7 @@ export default function SignerCard() {
             </div>
           ))
         ) : (
-          <p>No messages found on chain.</p>
+          <p>No messages found on this chain.</p>
         )}
       </div>
     </div>
