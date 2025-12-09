@@ -2,7 +2,7 @@
 export const MESSAGE_BOARD_ABI = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"string","name":"message","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"MessageSent","type":"event"},{"inputs":[],"name":"getAllMessages","outpts":[{"components":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"string","name":"message","type":"string"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"internalType":"struct MessageBoard.StoredMessage[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"messages","outputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"string","name":"message","type":"string"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_message","type":"string"}],"name":"sendMessage","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 
 // Define contract addresses for each supported Chain ID
-export const CONTRACT_ADDRESSES = {
+export const CONTRACT_ADDRSSES = {
   8453: '0xfeD9F66c600adce2847C6783bCfa28e32ABE44fb', // Base Mainnet Address
   84532: '0xe08946E6D18Dc799b56d34Ae0A8366a3046Bd35A', // Base Sepolia Address
 };
