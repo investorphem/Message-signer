@@ -3,6 +3,6 @@ export const MESSAGE_BOARD_ABI = [{"anonymous":false,"inputs":[{"indexed":true,"
 
 // Define contract addresses for each supported Chain ID
 export const CONTRACT_ADDRESSES = {
-  8453: '0xfeD9F66c600adce2847C6783bCfa28e32ABE44fb', // Base Mainnet Address
+  8453: '0xfeD9F66c600adce2847C6783bCfa28e32ABE44b', // Base Mainnet Address
   84532: '0xe08946E6D18Dc799b56d34Ae0A8366a3046Bd35A', // Base Sepolia Address
 };
