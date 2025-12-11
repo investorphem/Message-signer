@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// All necessary ho
+// All necessary h
 import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 // Import both the ABI and the dictionary of addresses
 import { CONTRACT_ADDRESSES, MESSAGE_BOARD_ABI } from '../constants';
