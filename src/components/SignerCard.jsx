@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// All necessary hooks are imported from 'wagmi' direct 
+// All necessary hooks are imported from 'wagmi' direc 
 import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 // Import both the ABI and the dictionary of addresses
 import { CONTRACT_ADDRESSES, MESSAGE_BOARD_ABI } from '../constants';
