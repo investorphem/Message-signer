@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// All necess
+// All necessary hooks are imported from 'wagmi' directly for v1.x:
 import { useAccount, useNetwork, useSwitchNetwork, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'; 
 // Import both the ABI and the dictionary of addresses
 import { CONTRACT_ADDRESSES, MESSAGE_BOARD_ABI } from '../constants';
@@ -21,7 +21,7 @@ export default function SignerCard() {
 
   const { data: hash, writeContractAsync } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
-  
+
   // Use the dynamic address for reading messages
   const { data: allMessages, refetch: refetchMessages } = useReadContract({
     address: contractAddress, // Use the dynamic address
@@ -92,7 +92,7 @@ export default function SignerCard() {
       </div>
 
       {hash && <p style={{ marginTop: 8 }}>Transaction Hash: <a href={getExplorerUrl(hash, selected)} target="_blank" rel="noopener noreferrer">{hash}</a></p>}
-      
+
       <hr style={{ margin: '16px 0' }} />
 
       <h4>Recent Messages On-Chain ({NETWORKS.find(n => n.id === selected)?.label})</h4>
