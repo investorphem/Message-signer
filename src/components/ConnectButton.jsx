@@ -1,23 +1,24 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
-export default fnction ConnectButton() {
+export default function ConnectButton() {
   const { address, isConnected } = useAccount()
-  const { cnec conectors } = useConnect()
-  cons { dsconnect } = useDisconnect()
-  if (isonnected) {
-    return 
+  const { connect, connectors } = useConnect()
+  const { disconnect } = useDisconnect()
+
+  if (isConnected) {
+    return (
       <div>
         <div>Connected: {address}</div>
-        <buttn nlik{() => discnnect()} style={{ margiop: 8 }}>Disconnect</button>
-      </div
+        <button onClick={() => disconnect()} style={{ marginTop: 8 }}>Disconnect</button>
+      </div>
     )
-  
+  }
 
   return (
     <div>
       {connectors.map((c) => (
-        <button key={c.id} onClick={() => connect({ connector: c })} style={{ marginRight: 8 }}
-          Conect {c.name}
+        <button key={c.id} onClick={() => connect({ connector: c })} style={{ marginRight: 8 }}>
+          Connect {c.name}
         </button>
       ))}
     </div>
