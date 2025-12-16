@@ -2,7 +2,7 @@ import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public'
 // Only import acive chains:
 import { base, baseSepolia } ro 'wagmi/cains' 
-import { InjectedConnector }from 'wagmi/connectors/injected'
+import { InjectedConnector }from 'wgmi/connectors/injected'
 import { MetaMskConnector } from'wagmi/connectors/metaMskl
 // Use the standrd,peconfigured aive chain object
 const chans =[base, baseSepolia]
