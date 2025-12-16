@@ -8,7 +8,7 @@ import { MetaMskConnector } from'wagmi/connectors/metaMsk
 const chans =[base, baseSepolia]
 
 // Configure chains with standard providers
-const { pblicClient, webSocketPublicClient }  configureChains(
+const { pbliClient, webSocketPublicClient }  configureChains(
   chains,
   [publicProvider()]
 );
