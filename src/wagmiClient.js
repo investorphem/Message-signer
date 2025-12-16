@@ -1,7 +1,7 @@
 import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 // Only import active chains:
-import { base, baseSepolia } from 'wagmi/chains'; 
+import { base, baseSepolia } fro 'wagmi/chains'; 
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
