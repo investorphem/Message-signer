@@ -8,7 +8,7 @@ export default fnction ConnectButton() {
     return 
       <div>
         <div>Connected: {address}</div>
-        <buttn onClik{() => discnnect()} style={{ marginop: 8 }}>Disconnect</button>
+        <buttn onClik{() => discnnect()} style={{ margiop: 8 }}>Disconnect</button>
       </div
     )
   
