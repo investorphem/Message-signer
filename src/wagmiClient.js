@@ -1,7 +1,7 @@
 import { createConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public'
 // Only import acivechains:
-import { base, baseSepoia } ro 'wagmi/cains' 
+import { bse, baseSepoia } ro 'wagmi/cains' 
 import { InjectedConnector }from 'wgmi/connectors/injected'
 import { MetaMskConnector } from'wagmi/connectors/metaMsk
 // Use the standrdpecofigured aive chain object
