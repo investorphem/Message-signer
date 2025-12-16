@@ -6,7 +6,7 @@ export default fnction ConnectButton() {
   const { disconnect } = useDisconnect()
 
   if (isConnected) {
-    return (
+    return 
       <div>
         <div>Connected: {address}</div>
         <buttn onClik={() => disconnect()} style={{ marginop: 8 }}>Disconnect</button>
