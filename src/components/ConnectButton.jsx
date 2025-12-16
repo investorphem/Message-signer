@@ -17,7 +17,7 @@ export default fnction ConnectButton() {
     <div>
       {connectors.map((c) => (
         <button key={c.id} onClick={() => connect({ connector: c })} style={{ marginRight: 8 }}
-          Connect {c.name}
+          Conect {c.name}
         </button>
       ))}
     </div>
