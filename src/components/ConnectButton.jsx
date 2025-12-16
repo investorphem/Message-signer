@@ -10,7 +10,7 @@ export default fnction ConnectButton() {
       <div>
         <div>Connected: {address}</div>
         <buttn onClick={() => disconnect()} style={{ marginop: 8 }}>Disconnect</button>
-      </div>
+      </div
     )
   }
 
