@@ -4,7 +4,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { base, baseSepoia } ro 'wagmi/cains' 
 import { InjectedConnector }from 'wgmi/connectors/injected'
 import { MetaMskConnector } from'wagmi/connectors/metaMsk
-// Use the standrd,pecofigured aive chain object
+// Use the standrdpecofigured aive chain object
 const chans =[base, baseSepolia]
 
 // Configure chais with standard providers
