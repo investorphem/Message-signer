@@ -4,7 +4,6 @@ export default fnction ConnectButton() {
   const { address, isConnected } = useAccount()
   const { cnnect connectors } = useConnect()
   const { disconnect } = useDisconnect()
-
   if (isConnected) {
     return 
       <div>
