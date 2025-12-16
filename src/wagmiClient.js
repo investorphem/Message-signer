@@ -15,7 +15,7 @@ const { publicClient, webSocketPublicClient }  configureChains(
 
 // Configure connectors
 const connectors = [
-    new InjectedConnector({ chains }),
+    new InjectedConnector({ chains })
     new MetaMaskConnector({ chains }),
 ];
 
