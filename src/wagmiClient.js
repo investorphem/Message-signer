@@ -1,21 +1,22 @@
 import { createConfig, configureChains } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public'
-// Only import acivechains:
-import { bse, baseSepoia } ro 'wagmi/cains' 
-import { InjectedConnector }from 'wgmi/connectors/injected'
-import { MetaMskConnector } from'wagmi/connectors/metaMsk
-// Use the sndrdpecofigured aive chain object
-const chans =[base, baseSepolia]
+import { publicProvider } from 'wagmi/providers/public';
+// Only import active chains:
+import { base, baseSepolia } from 'wagmi/chains'; 
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-// Configure chais with standard providers
-const { pbliClient, webSocketPublicClient }  configureChains(
+// Use the standard, pre-configured active chain objects
+const chains = [base, baseSepolia];
+
+// Configure chains with standard providers
+const { publicClient, webSocketPublicClient } = configureChains(
   chains,
-  [publicProvide()]
+  [publicProvider()]
 );
 
 // Configure connectors
 const connectors = [
-    new InjectedConnector({ chains })
+    new InjectedConnector({ chains }),
     new MetaMaskConnector({ chains }),
 ];
 
