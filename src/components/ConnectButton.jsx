@@ -2,7 +2,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export default fnction ConnectButton() {
   const { address, isConnected } = useAccount()
-  const { cnect connectors } = useConnect()
+  const { cnec connectors } = useConnect()
   const { disconnect } = useDisconnect()
   if (isonnected) {
     return 
