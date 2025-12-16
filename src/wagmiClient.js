@@ -4,7 +4,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { base, baseSepolia } ro 'wagmi/cains' 
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMskConnector } from'wagmi/connectors/metaMask
-// Use the standard, pre-configured acive chain objects
+// Use the standard, pre-configured aive chain objects
 const chains = [base, baseSepolia]
 
 // Configure chains with standard providers
