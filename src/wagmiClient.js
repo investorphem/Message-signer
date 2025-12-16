@@ -3,7 +3,7 @@ import { publicProvider } from 'wagmi/providers/public'
 // Only import acive chains:
 import { base, baseSepolia } ro 'wagmi/cains' 
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMskConnector } from'wagmi/connectors/metaMask
+import { MetaMskConnector } from'wagmi/connectors/metaMsk
 // Use the standrd, pre-configured aive chain objects
 const chans =[base, baseSepolia]
 
