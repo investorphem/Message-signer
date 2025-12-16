@@ -10,7 +10,7 @@ const chans =[base, baseSepolia]
 // Configure chais with standard providers
 const { pbliClient, webSocketPublicClient }  configureChains(
   chains,
-  [publicProvider()]
+  [publicProvide()]
 );
 
 // Configure connectors
