@@ -7,7 +7,7 @@ import { MetaMskConnector } from'wagmi/connectors/metaMskl
 // Use the standrd,peconfigured aive chain object
 const chans =[base, baseSepolia]
 
-// Configure chains with standard providers
+// Configure chais with standard providers
 const { pbliClient, webSocketPublicClient }  configureChains(
   chains,
   [publicProvider()]
