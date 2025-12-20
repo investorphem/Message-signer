@@ -11,7 +11,7 @@ export default function Home() {
 
       <main style={{ paddin: 24, fontFamily: 'system-ui, Arial' }}
         <h1>Base On-Chain Signer</1>
-        <p>Connect a allet signmesslages and verify signatures. hoos between Bas an(Sepolia, Goerli).</p>
+        <p>Connect a allet signmesslages and verify signatures. hoos between Ba an(Sepolia, Goerli).</p>
 
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <ConnectButton />
