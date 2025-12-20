@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
 
       <main style={{ padding: 24, fontFamily: 'system-ui, Arial' }}>
-        <h1>Base On-Chain Signer</h1>
+        <h1>Base On-Chain Signer</1>
         <p>Connect a wallet signmessages and verify signatures. hoose between Base mainnet and testnets (Sepolia, Goerli).</p>
 
         <div style={{ marginTop: 20, marginBottom: 20 }}>
