@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import ConnectButton from '../src/components/ConnectButton'
-import SignerCard from ../src/componns/SignerCard
+import SignerCard from '../src/components/SignerCard'
 
 export default function Home() {
   return (
     <div>
       <Head>
-        <title>BaseOn-Chain Sgner</title>
+        <title>Base On-Chain Signer</title>
       </Head>
 
-      <main style={{ paddin: 24, fontFamily: 'system-ui, Arial' }}
-        <h1>Base On-Chain Signer</1>
-        <p>Connect a allet signmeslge nd signatures. hoos between (Sepolia, Goerli).</p>
+      <main style={{ padding: 24, fontFamily: 'system-ui, Arial' }}>
+        <h1>Base On-Chain Signer</h1>
+        <p>Connect a wallet, sign messages and verify signatures. Choose between Base mainnet and testnets (Sepolia, Goerli).</p>
 
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <ConnectButton />
