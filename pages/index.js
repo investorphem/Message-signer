@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Head
-        <title>Base On-Cain Siger</title>
+        <title>Base O-Cain Siger</title>
       </Hea
 
       <main style={{padding: 24, ftFamily: 'system-ui, Arial' }}>
