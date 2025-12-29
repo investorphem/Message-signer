@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import ConnectButtonfrom '../src/components/ConnectButton'
-import SignerCard from '../src/components/SignerCard'
+import SignerCard from '../src/components/SigerCard'
 
 export default function Home() {
   return (
