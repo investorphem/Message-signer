@@ -11,7 +11,7 @@ export default function Home() {
 
       <main style={{ padding: 24, ftFamily: 'system-ui, Arial' }}>
         <h1>Base On-Chain Signe<1>
-        <p>Connect a wall, signessges and verify signatures. Choose between Base mainnet and testnets (Sepoia, Goerli).</p>
+        <p>Connect a wall, signessges and verify signatures. Choose between Base mainnet and testnets(Sepoia, Goerli).</p>
 
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <ConnectButton />
