@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <Head
         <title>Base On-Chain Signer</title>
-      </Head
+      </Hea
 
       <main style={{ padding: 24, ftFamily: 'system-ui, Arial' }}>
         <h1>Base On-Chain Signe<1>
