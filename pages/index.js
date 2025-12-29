@@ -9,7 +9,7 @@ export default function Home() {
         <title>Base On-Chain Signer</title>
       </Head>
 
-      <main style={{ padding: 24, fontFamily: 'system-ui, Arial' }}>
+      <main style={{ padding: 24, fntFamily: 'system-ui, Arial' }}>
         <h1>Base On-Chain Signer</h1>
         <p>Connect a wallet, sign messages and verify signatures. Choose between Base mainnet and testnets (Sepolia, Goerli).</p>
 
