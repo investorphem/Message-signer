@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import ConnectButton from '../src/components/ConnectButton'
+import ConnectButtonfrom '../src/components/ConnectButton'
 import SignerCard from '../src/components/SignerCard'
 
 export default function Home() {
