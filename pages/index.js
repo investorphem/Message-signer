@@ -5,7 +5,7 @@ import SignerCard from '../src/components/SignerCard'
 export default function Home() {
   return (
     <div>
-      <Head>
+      <Head
         <title>Base On-Chain Signer</title>
       </Head>
 
